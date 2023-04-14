@@ -17,6 +17,13 @@ const remove_feed_once_available = run_only_one_at_a_time((callback) => {
   if (window.intervention_disabled) {
     return
   }
+  //Husain: Prevents this from being run on video pages
+  var url = window.location.href;
+  var res = url.includes("watch");
+  if (res == true) {
+    console.log('video page');
+    return
+  }
 
   /** 
    * First, use JS to inject CSS to hide the feeds
@@ -49,13 +56,13 @@ const remove_feed_once_available = run_only_one_at_a_time((callback) => {
     show_buttons('ytd-browse')
     callback()
   })
-
-  // Once the sidebar feed has loaded, show those buttons
-  const side_feed_selector = 'ytd-watch[video-id] ytd-watch-next-secondary-results-renderer'
-  once_available_fast(side_feed_selector, () => {
-    show_buttons('#related')
-    callback()
-  })
+  //Husain: Does not seem to do anything
+  // // Once the sidebar feed has loaded, show those buttons
+  // const side_feed_selector = 'ytd-watch[video-id] ytd-watch-next-secondary-results-renderer'
+  // once_available_fast(side_feed_selector, () => {
+  //   show_buttons('#related')
+  //   callback()
+  // })
 
   //Remove chips
   $('#chips-wrapper').remove()
@@ -65,9 +72,9 @@ function show_buttons(target_selector) {
   if (window.intervention_disabled) {
     return
   }
-  if ($(target_selector).find('.habitlab_inserted_div').length > 0) {
-    return
-  }
+  // if ($(target_selector).find('.habitlab_inserted_div').length > 0) {
+  //   return
+  // }
   let habitlab_div = $('<div style="width: 100%; text-align: center">')
   habitlab_div.css({
     'text-align': 'center', 'color': 'white', 'font-size': '20px',
