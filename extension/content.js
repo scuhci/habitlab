@@ -64,18 +64,19 @@
           z-index: 2147483647;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
           pointer-events: none;
+          -webkit-font-smoothing: antialiased;
         }
         .banner {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          padding: 6px 16px;
-          background: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
+          padding: 8px 20px;
+          background: linear-gradient(160deg, #5b4cdb 0%, #8b7cf7 50%, #a78bfa 100%);
           color: white;
           font-size: 13px;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+          box-shadow: 0 2px 12px rgba(91,76,219,0.35);
           pointer-events: auto;
-          transition: transform 0.3s ease;
+          transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .banner.minimized {
           transform: translateY(-100%);
@@ -83,21 +84,24 @@
         .banner-left {
           display: flex;
           align-items: center;
-          gap: 12px;
+          gap: 14px;
         }
         .logo {
-          font-weight: 700;
-          color: #a29bfe;
-          font-size: 14px;
+          font-weight: 800;
+          color: white;
+          font-size: 13px;
+          letter-spacing: -0.2px;
+          opacity: 0.85;
         }
         .time-display {
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 10px;
         }
         .time-value {
-          font-weight: 600;
+          font-weight: 700;
           font-size: 14px;
+          font-variant-numeric: tabular-nums;
         }
         .progress-bar {
           width: 120px;
@@ -112,8 +116,9 @@
           transition: width 1s linear, background-color 0.5s;
         }
         .limit-text {
-          opacity: 0.7;
+          opacity: 0.65;
           font-size: 12px;
+          font-weight: 500;
         }
         .banner-right {
           display: flex;
@@ -121,26 +126,29 @@
           gap: 8px;
         }
         .btn {
-          background: rgba(255,255,255,0.15);
-          border: none;
+          background: rgba(255,255,255,0.18);
+          border: 1px solid rgba(255,255,255,0.12);
           color: white;
-          padding: 4px 10px;
-          border-radius: 4px;
+          padding: 5px 12px;
+          border-radius: 7px;
           cursor: pointer;
           font-size: 12px;
-          transition: background 0.2s;
+          font-weight: 600;
+          transition: all 0.2s;
         }
         .btn:hover {
-          background: rgba(255,255,255,0.25);
+          background: rgba(255,255,255,0.28);
+          transform: translateY(-1px);
         }
         .close-btn {
           background: none;
           border: none;
-          color: rgba(255,255,255,0.5);
+          color: rgba(255,255,255,0.45);
           cursor: pointer;
-          font-size: 16px;
+          font-size: 18px;
           padding: 0 4px;
           line-height: 1;
+          transition: color 0.2s;
         }
         .close-btn:hover {
           color: white;
@@ -149,15 +157,20 @@
           position: fixed;
           top: 0;
           right: 20px;
-          background: #2d3436;
-          color: #a29bfe;
-          padding: 2px 12px 4px;
-          border-radius: 0 0 6px 6px;
+          background: linear-gradient(160deg, #5b4cdb, #8b7cf7);
+          color: white;
+          padding: 3px 14px 5px;
+          border-radius: 0 0 8px 8px;
           font-size: 11px;
+          font-weight: 700;
           cursor: pointer;
           pointer-events: auto;
-          box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+          box-shadow: 0 2px 8px rgba(91,76,219,0.3);
           display: none;
+          transition: box-shadow 0.2s;
+        }
+        .toggle-tab:hover {
+          box-shadow: 0 4px 12px rgba(91,76,219,0.4);
         }
       </style>
       <div class="banner" id="banner">
@@ -255,11 +268,12 @@
           bottom: 0;
           z-index: 2147483646;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          -webkit-font-smoothing: antialiased;
         }
         .overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
+          background: linear-gradient(160deg, #1a1040 0%, #2d1b69 40%, #4a2d8a 100%);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -267,75 +281,93 @@
           color: white;
         }
         .icon {
-          font-size: 64px;
-          margin-bottom: 24px;
+          font-size: 56px;
+          margin-bottom: 20px;
+          opacity: 0.9;
         }
         h1 {
-          font-size: 32px;
-          margin: 0 0 12px;
-          font-weight: 700;
+          font-size: 34px;
+          margin: 0 0 10px;
+          font-weight: 800;
+          letter-spacing: -0.5px;
         }
         .subtitle {
-          font-size: 18px;
-          opacity: 0.8;
-          margin-bottom: 32px;
+          font-size: 17px;
+          opacity: 0.7;
+          margin-bottom: 36px;
+          font-weight: 500;
         }
         .time-info {
-          background: rgba(255,255,255,0.1);
-          border-radius: 12px;
-          padding: 20px 32px;
-          margin-bottom: 32px;
+          background: rgba(255,255,255,0.07);
+          border: 1px solid rgba(255,255,255,0.08);
+          border-radius: 16px;
+          padding: 24px 40px;
+          margin-bottom: 36px;
           text-align: center;
+          backdrop-filter: blur(8px);
         }
         .time-big {
-          font-size: 36px;
-          font-weight: 700;
-          color: #ff7675;
+          font-size: 38px;
+          font-weight: 800;
+          color: #f0abfc;
+          letter-spacing: -1px;
+          font-variant-numeric: tabular-nums;
         }
         .time-label {
-          font-size: 14px;
-          opacity: 0.7;
-          margin-top: 4px;
+          font-size: 13px;
+          opacity: 0.55;
+          margin-top: 6px;
+          font-weight: 500;
         }
         .actions {
           display: flex;
           gap: 12px;
         }
         .btn {
-          padding: 12px 24px;
-          border-radius: 8px;
+          padding: 13px 28px;
+          border-radius: 12px;
           border: none;
           font-size: 15px;
           cursor: pointer;
-          font-weight: 600;
-          transition: transform 0.2s, box-shadow 0.2s;
+          font-weight: 700;
+          transition: all 0.2s;
+          letter-spacing: 0.1px;
         }
         .btn:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(0,0,0,0.3);
         }
         .btn-primary {
-          background: #6c5ce7;
+          background: linear-gradient(160deg, #6c5ce7, #a78bfa);
           color: white;
+          box-shadow: 0 2px 12px rgba(108,92,231,0.4);
         }
         .btn-secondary {
-          background: rgba(255,255,255,0.15);
+          background: rgba(255,255,255,0.1);
           color: white;
+          border: 1px solid rgba(255,255,255,0.12);
+          backdrop-filter: blur(4px);
         }
         .btn-cheat {
           background: none;
-          border: 1px solid rgba(255,255,255,0.2);
-          color: rgba(255,255,255,0.5);
-          margin-top: 16px;
+          border: 1px solid rgba(255,255,255,0.12);
+          color: rgba(255,255,255,0.35);
+          margin-top: 20px;
           font-size: 13px;
-          padding: 8px 16px;
+          padding: 9px 18px;
+          border-radius: 10px;
+        }
+        .btn-cheat:hover {
+          color: rgba(255,255,255,0.6);
+          border-color: rgba(255,255,255,0.2);
         }
         .logo-text {
           position: absolute;
-          bottom: 24px;
-          font-size: 14px;
-          color: rgba(255,255,255,0.3);
-          font-weight: 700;
+          bottom: 28px;
+          font-size: 13px;
+          color: rgba(255,255,255,0.2);
+          font-weight: 800;
+          letter-spacing: -0.2px;
         }
       </style>
       <div class="overlay">
@@ -404,11 +436,12 @@
           top: 0; left: 0; right: 0; bottom: 0;
           z-index: 2147483645;
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          -webkit-font-smoothing: antialiased;
         }
         .overlay {
           position: absolute;
           inset: 0;
-          background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+          background: linear-gradient(160deg, #5b4cdb 0%, #8b7cf7 50%, #a78bfa 100%);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -416,18 +449,23 @@
           color: white;
         }
         .countdown {
-          font-size: 72px;
-          font-weight: 700;
-          margin-bottom: 16px;
+          font-size: 80px;
+          font-weight: 800;
+          margin-bottom: 12px;
+          letter-spacing: -2px;
+          font-variant-numeric: tabular-nums;
+          text-shadow: 0 2px 20px rgba(0,0,0,0.15);
         }
         .message {
-          font-size: 20px;
+          font-size: 19px;
           opacity: 0.9;
+          font-weight: 500;
         }
         .submessage {
           font-size: 14px;
-          opacity: 0.6;
-          margin-top: 8px;
+          opacity: 0.5;
+          margin-top: 10px;
+          font-weight: 500;
         }
       </style>
       <div class="overlay">
@@ -482,10 +520,10 @@
           const placeholder = document.createElement('div');
           placeholder.className = 'habitlab-feed-placeholder';
           placeholder.innerHTML = `
-            <div style="text-align:center; padding:60px 20px; color:#636e72; font-family:-apple-system,sans-serif;">
-              <div style="font-size:48px; margin-bottom:16px;">&#128218;</div>
-              <div style="font-size:18px; font-weight:600; margin-bottom:8px;">Feed hidden by HabitLab</div>
-              <div style="font-size:14px; opacity:0.7;">The news feed has been removed to help you stay focused.</div>
+            <div style="text-align:center; padding:60px 20px; color:#6b7280; font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif; -webkit-font-smoothing:antialiased;">
+              <div style="font-size:44px; margin-bottom:16px; opacity:0.8;">&#128218;</div>
+              <div style="font-size:17px; font-weight:700; margin-bottom:8px; color:#374151; letter-spacing:-0.2px;">Feed hidden by HabitLab</div>
+              <div style="font-size:14px; font-weight:500; opacity:0.6; line-height:1.5;">The news feed has been removed to help you stay focused.</div>
             </div>
           `;
           el.parentNode.insertBefore(placeholder, el.nextSibling);
@@ -550,18 +588,20 @@
     warning.id = 'habitlab-scroll-warning';
     warning.style.cssText = `
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 2147483647;
-      background: linear-gradient(135deg, #d63031, #e17055);
-      color: white; padding: 16px 24px;
+      background: linear-gradient(160deg, #dc2626, #ef4444);
+      color: white; padding: 14px 24px;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      font-size: 15px; text-align: center;
-      box-shadow: 0 -2px 10px rgba(0,0,0,0.3);
+      font-size: 14px; text-align: center;
+      box-shadow: 0 -4px 20px rgba(220,38,38,0.25);
       display: flex; align-items: center; justify-content: center; gap: 16px;
+      -webkit-font-smoothing: antialiased;
     `;
     warning.innerHTML = `
-      <span>&#x1F6D1; <strong>Scroll limit reached!</strong> You've been scrolling a lot. Take a break?</span>
+      <span style="font-weight:500;">&#x1F6D1; <strong style="font-weight:700;">Scroll limit reached!</strong> You've been scrolling a lot. Take a break?</span>
       <button id="habitlab-scroll-continue" style="
-        background: rgba(255,255,255,0.2); border: none; color: white;
-        padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 13px;
+        background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.15); color: white;
+        padding: 7px 16px; border-radius: 8px; cursor: pointer; font-size: 12px; font-weight: 600;
+        transition: background 0.2s;
       ">Continue scrolling</button>
     `;
     document.body.appendChild(warning);

@@ -80,19 +80,23 @@ function renderOverview(allStats) {
 
   statsGrid.innerHTML = `
     <div class="stat-card">
+      <span class="stat-icon">&#9201;</span>
       <div class="stat-value" style="color:#6c5ce7">${formatTime(totalTime)}</div>
       <div class="stat-label">Total time today</div>
     </div>
     <div class="stat-card">
-      <div class="stat-value" style="color:${sitesOverLimit > 0 ? '#d63031' : '#00b894'}">${sitesOverLimit}</div>
+      <span class="stat-icon">&#9888;&#65039;</span>
+      <div class="stat-value" style="color:${sitesOverLimit > 0 ? '#dc2626' : '#059669'}">${sitesOverLimit}</div>
       <div class="stat-label">Sites over limit</div>
     </div>
     <div class="stat-card">
-      <div class="stat-value" style="color:#636e72">${siteCount}</div>
+      <span class="stat-icon">&#127760;</span>
+      <div class="stat-value" style="color:#374151">${siteCount}</div>
       <div class="stat-label">Sites tracked</div>
     </div>
     <div class="stat-card">
-      <div class="stat-value" style="color:${totalTime < totalLimit ? '#00b894' : '#d63031'}">
+      <span class="stat-icon">&#128202;</span>
+      <div class="stat-value" style="color:${totalTime < totalLimit ? '#059669' : '#dc2626'}">
         ${totalLimit > 0 ? Math.round((totalTime / totalLimit) * 100) : 0}%
       </div>
       <div class="stat-label">Daily budget used</div>
@@ -105,7 +109,7 @@ function renderOverview(allStats) {
     .sort(([, a], [, b]) => b.timeSpentToday - a.timeSpentToday);
 
   if (sorted.length === 0) {
-    todayActivity.innerHTML = '<p style="text-align:center;color:#b2bec3;padding:24px;">No activity yet today</p>';
+    todayActivity.innerHTML = '<p style="text-align:center;color:#9ca3af;padding:28px;font-weight:500;font-size:14px;">No activity yet today</p>';
     return;
   }
 
@@ -139,7 +143,7 @@ function renderSites(sites, allStats) {
 
   const entries = Object.entries(sites || {});
   if (entries.length === 0) {
-    sitesList.innerHTML = '<p style="text-align:center;color:#b2bec3;padding:24px;">No sites configured. Add one below!</p>';
+    sitesList.innerHTML = '<p style="text-align:center;color:#9ca3af;padding:28px;font-weight:500;font-size:14px;">No sites configured. Add one below!</p>';
     return;
   }
 
@@ -158,7 +162,7 @@ function renderSites(sites, allStats) {
         <div style="display:flex;align-items:center;gap:8px;">
           <input type="number" class="limit-input" value="${config.dailyMinutes}" min="1" max="480"
                  data-domain="${domain}" style="width:50px">
-          <span style="font-size:12px;color:#636e72">min/day</span>
+          <span style="font-size:12px;color:#9ca3af">min/day</span>
         </div>
         <label class="toggle" title="${config.enabled ? 'Enabled' : 'Disabled'}">
           <input type="checkbox" class="site-toggle" data-domain="${domain}" ${config.enabled ? 'checked' : ''}>
@@ -247,7 +251,7 @@ function renderInterventions(interventionDefs, sites, interventions) {
   // Per-site configuration
   const siteEntries = Object.entries(sites || {}).filter(([, s]) => s.enabled);
   if (siteEntries.length === 0) {
-    config.innerHTML = '<p style="text-align:center;color:#b2bec3;padding:24px;">Enable some sites first</p>';
+    config.innerHTML = '<p style="text-align:center;color:#9ca3af;padding:24px;">Enable some sites first</p>';
     return;
   }
 
@@ -272,7 +276,7 @@ function renderInterventions(interventionDefs, sites, interventions) {
       <div style="margin-bottom:24px;">
         <h3 style="font-size:15px;font-weight:600;margin-bottom:12px;display:flex;align-items:center;gap:8px;">
           <span style="width:10px;height:10px;border-radius:50%;background:${siteConfig.color};display:inline-block;"></span>
-          ${siteConfig.name} <span style="font-weight:400;color:#636e72;font-size:12px;">${domain}</span>
+          ${siteConfig.name} <span style="font-weight:400;color:#9ca3af;font-size:12px;">${domain}</span>
         </h3>
         ${rows}
       </div>
@@ -335,7 +339,7 @@ function renderHistory(history, sites) {
 
   // Detailed breakdown
   if (Object.keys(history || {}).length === 0) {
-    details.innerHTML = '<p style="text-align:center;color:#b2bec3;padding:24px;">No history data yet. Check back tomorrow!</p>';
+    details.innerHTML = '<p style="text-align:center;color:#9ca3af;padding:24px;">No history data yet. Check back tomorrow!</p>';
     return;
   }
 
@@ -346,7 +350,7 @@ function renderHistory(history, sites) {
     const siteRows = Object.entries(data)
       .sort(([, a], [, b]) => b - a)
       .map(([domain, seconds]) => {
-        const siteConfig = sites[domain] || { name: domain, color: '#636e72' };
+        const siteConfig = sites[domain] || { name: domain, color: '#9ca3af' };
         return `<span style="display:inline-flex;align-items:center;gap:4px;margin-right:12px;font-size:12px;">
           <span style="width:6px;height:6px;border-radius:50%;background:${siteConfig.color};display:inline-block;"></span>
           ${siteConfig.name}: ${formatTime(seconds)}
@@ -354,10 +358,10 @@ function renderHistory(history, sites) {
       }).join('');
 
     return `
-      <div style="padding:12px 0;border-bottom:1px solid #f0f2f5;">
+      <div style="padding:12px 0;border-bottom:1px solid #f0ecff;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
           <strong style="font-size:14px;">${dateStr}</strong>
-          <span style="font-size:14px;font-weight:600;color:#636e72;">${formatTime(total)}</span>
+          <span style="font-size:14px;font-weight:600;color:#9ca3af;">${formatTime(total)}</span>
         </div>
         <div>${siteRows}</div>
       </div>
