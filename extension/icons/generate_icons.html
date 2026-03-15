@@ -1,0 +1,30 @@
+<!-- Open this file in a browser to generate icon PNGs. Right-click each canvas and "Save image as" -->
+<!DOCTYPE html>
+<html>
+<body>
+<h3>Right-click each icon and "Save image as" to create the PNG files</h3>
+<p>icon16.png:</p><canvas id="c16" width="16" height="16"></canvas>
+<p>icon48.png:</p><canvas id="c48" width="48" height="48"></canvas>
+<p>icon128.png:</p><canvas id="c128" width="128" height="128"></canvas>
+<script>
+function drawIcon(canvas) {
+  const ctx = canvas.getContext('2d');
+  const s = canvas.width;
+  // Background circle
+  ctx.fillStyle = '#6C5CE7';
+  ctx.beginPath();
+  ctx.arc(s/2, s/2, s/2, 0, Math.PI * 2);
+  ctx.fill();
+  // Letter H
+  ctx.fillStyle = '#FFFFFF';
+  ctx.font = `bold ${s * 0.6}px Arial`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText('H', s/2, s/2 + s*0.03);
+}
+drawIcon(document.getElementById('c16'));
+drawIcon(document.getElementById('c48'));
+drawIcon(document.getElementById('c128'));
+</script>
+</body>
+</html>

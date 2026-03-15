@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HabitLab</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      width: 360px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f8f9fa;
+      color: #2d3436;
+    }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+      color: white;
+      padding: 16px 20px;
+    }
+    .header-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .header h1 {
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .header-btn {
+      background: rgba(255,255,255,0.2);
+      border: none;
+      color: white;
+      padding: 6px 10px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12px;
+      transition: background 0.2s;
+    }
+    .header-btn:hover { background: rgba(255,255,255,0.3); }
+
+    /* Current site */
+    .current-site {
+      padding: 16px 20px;
+      background: white;
+      border-bottom: 1px solid #eee;
+    }
+    .current-site.not-tracked {
+      text-align: center;
+      color: #636e72;
+      padding: 24px 20px;
+    }
+    .current-site .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #636e72;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .site-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .site-name {
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .site-time {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .progress-container {
+      width: 100%;
+      height: 8px;
+      background: #eee;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 8px;
+    }
+    .progress-bar {
+      height: 100%;
+      border-radius: 4px;
+      transition: width 0.5s;
+    }
+    .limit-info {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: #636e72;
+    }
+
+    /* Quick toggles */
+    .toggles {
+      padding: 12px 20px;
+      background: white;
+      border-bottom: 1px solid #eee;
+    }
+    .toggles .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #636e72;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 0;
+    }
+    .toggle-label {
+      font-size: 13px;
+    }
+    .toggle-switch {
+      position: relative;
+      width: 36px;
+      height: 20px;
+    }
+    .toggle-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .toggle-slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background: #ccc;
+      border-radius: 10px;
+      transition: 0.3s;
+    }
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      left: 2px;
+      bottom: 2px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+    .toggle-switch input:checked + .toggle-slider {
+      background: #6c5ce7;
+    }
+    .toggle-switch input:checked + .toggle-slider::before {
+      transform: translateX(16px);
+    }
+
+    /* Summary */
+    .summary {
+      padding: 16px 20px;
+    }
+    .summary .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #636e72;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+    }
+    .site-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+    }
+    .site-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .site-row-name {
+      flex: 1;
+      font-size: 13px;
+    }
+    .site-row-time {
+      font-size: 13px;
+      font-weight: 600;
+      color: #636e72;
+    }
+    .site-row-bar {
+      width: 60px;
+      height: 4px;
+      background: #eee;
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .site-row-fill {
+      height: 100%;
+      border-radius: 2px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 20px;
+      color: #b2bec3;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="header-top">
+      <h1>HabitLab</h1>
+      <div class="header-actions">
+        <button class="header-btn" id="dashboardBtn">Dashboard</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="current-site" id="currentSite">
+    <div class="not-tracked" id="notTracked" style="display:none;">
+      <p>This site is not being tracked.</p>
+      <button class="header-btn" id="addSiteBtn" style="margin-top:8px; background:#6c5ce7;">+ Track this site</button>
+    </div>
+    <div id="trackedInfo" style="display:none;">
+      <div class="label">Current Site</div>
+      <div class="site-info">
+        <span class="site-name" id="siteName"></span>
+        <span class="site-time" id="siteTime"></span>
+      </div>
+      <div class="progress-container">
+        <div class="progress-bar" id="siteProgress"></div>
+      </div>
+      <div class="limit-info">
+        <span id="visitCount"></span>
+        <span id="limitText"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="toggles" id="togglesSection" style="display:none;">
+    <div class="label">Interventions</div>
+    <div id="togglesList"></div>
+  </div>
+
+  <div class="summary">
+    <div class="label">Today's Usage</div>
+    <div id="summaryList"></div>
+    <div class="empty-state" id="emptyState" style="display:none;">No tracked sites with usage today</div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

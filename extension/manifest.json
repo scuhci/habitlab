@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "HabitLab",
+  "short_name": "HabitLab",
+  "version": "2.0.0",
+  "description": "Build better habits online. Set time goals for distracting sites and HabitLab will help you stick to them with smart interventions.",
+  "permissions": [
+    "storage",
+    "tabs",
+    "alarms",
+    "notifications",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "options_page": "dashboard.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.js"],
+      "css": ["css/interventions.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["css/*", "icons/*"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ]
+}
